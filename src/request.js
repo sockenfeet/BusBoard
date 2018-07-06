@@ -1,20 +1,14 @@
-const request = require("request");
+const request = require("request-promise-native");
 const HttpStatus = require("http-status-codes");
 
-module.exports = (url, callback) => {
-    request(url, (err, response, body) => {
-        if(err) {
-            return console.log(err);
+module.exports = url => {
+    return request({
+        uri: url,
+        resolveWithFullResponse: true
+    }).then(response => {
+        if (response.statusCode !== 200) {
+            throw `Error ${response.statusCode}: ${HttpStatus.getStatusText(response.statusCode)}`;
         }
-        if(response.statusCode !== 200) {
-            return console.log(`Error ${response.statusCode}: ${HttpStatus.getStatusText(response.statusCode)}`);
-        }
-        let bodyObj;
-        try{
-            bodyObj = JSON.parse(body);
-        } catch (e) {
-            return console.log(e);
-        }
-        callback(bodyObj);
+        return JSON.parse(response.body);
     });
 };
