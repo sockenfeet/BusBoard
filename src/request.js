@@ -1,8 +1,7 @@
-const request = require('request');
-const keys = require("./keys");
+const request = require("request");
 const HttpStatus = require("http-status-codes");
-module.exports = (requestUrl, callback) => {
-    let url = requestUrl + `?app_id=${keys.appID}&app_key=${keys.appKey}`;
+
+module.exports = (url, callback) => {
     request(url, (err, response, body) => {
         if(err) {
             return console.log(err);

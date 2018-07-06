@@ -1,6 +1,6 @@
 const tflConsts = require("./consts");
-const tflRequest = require("./tflRequest");
-const Bus = require("./bus");
+const tflRequest = require("./request");
+const Bus = require("../bus");
 const endPointName = "Arrivals";
 
 module.exports = (stopID, callback) => {
