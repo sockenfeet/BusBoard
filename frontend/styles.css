@@ -61,3 +61,10 @@ td {
     color: black;
     padding: 20px;
 }
+
+#map {
+    margin-left: auto;
+    margin-right: auto;
+    height: 400px;
+    width: 50%;
+}
