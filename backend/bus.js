@@ -4,4 +4,4 @@ module.exports = class {
         this.destination = destination;
         this.timeToStop = timeToStation;
     }
-}
+};
