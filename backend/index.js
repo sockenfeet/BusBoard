@@ -4,6 +4,7 @@ const radius = require("./tflapi/radius");
 const express = require('express');
 
 const app = express();
+app.use(express.static('frontend'));
 app.get('/departureBoards', (req, res) => {
     Promise.resolve(req.query.postcode)
         .then(post)
@@ -12,6 +13,7 @@ app.get('/departureBoards', (req, res) => {
         .then(str => res.send(str))
         .catch(e => {
             console.warn(e);
+            res.status(418);
             res.send(e.message);
         });
 });
