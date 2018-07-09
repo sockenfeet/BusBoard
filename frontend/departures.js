@@ -8,7 +8,7 @@ function getBuses(param) {
             var response = JSON.parse(xhttp.responseText);
             var html;
             if (response.length === 0) {
-                html = "<h2>No buses found nearby</h2>Is the postcode in London?";
+                html = "<div class='warning'><h2>No buses found nearby</h2>Is the postcode in London?</div>";
             } else {
                 html = "<h2>Results</h2>";
                 response.forEach(function (stop) {
@@ -26,9 +26,9 @@ function getBuses(param) {
             }
             document.getElementById("results").innerHTML = html;
         } else {
-            document.getElementById("results").innerHTML = "<h2>An error occurred</h2>See console for details";
+            document.getElementById("results").innerHTML = "<div class='error'><h2>An error occurred</h2>See console for details</div>";
             console.log(xhttp.responseText);
         }
     };
     xhttp.send();
-};
+}

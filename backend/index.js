@@ -5,6 +5,7 @@ const express = require('express');
 
 const app = express();
 app.use(express.static('frontend'));
+app.use("/facts", express.static('frontend/facts.html'));
 app.get('/departureBoards', (req, res) => {
     Promise.resolve(req.query.postcode)
         .then(post)
