@@ -42,6 +42,7 @@ function getBuses() {
                 });
             }
             document.getElementById("results").innerHTML = html;
+            setMarkers(response.map(stop => stop.stop));
         } else {
             success = false;
             document.getElementById("results").innerHTML = "<div class='error'><h2>An error occurred</h2>See console for details</div>";
