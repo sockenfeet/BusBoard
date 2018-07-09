@@ -1,14 +1,31 @@
-function getBuses(param) {
-    var xhttp = new XMLHttpRequest();
+var postcode = undefined;
+var interval;
 
-    xhttp.open('GET', `http://localhost:3000/departureBoards?postcode=${param.elements[0].value}`, true);
+function submitPostcode(form) {
+    if (interval) {
+        clearInterval(interval);
+    }
+    postcode = form.elements[0].value;
+    interval = setInterval(getBuses, 30000);
+    getBuses();
+}
+
+function getBuses() {
+    if(!postcode) {
+        clearInterval(interval);
+        return;
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.open('GET', `http://localhost:3000/departureBoards?postcode=${postcode}`, true);
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.onload = function () {
+        var success = true;
         if (xhttp.status === 200) {
             var response = JSON.parse(xhttp.responseText);
             var html;
             if (response.length === 0) {
-                html = "<div class='warning'><h2>No buses found nearby</h2>Is the postcode in London?</div>";
+                success = false;
+                html = "<div class='warning'><h2>No bus stops found nearby</h2>Is the postcode in London?</div>";
             } else {
                 html = "<h2>Results</h2>";
                 response.forEach(function (stop) {
@@ -26,8 +43,12 @@ function getBuses(param) {
             }
             document.getElementById("results").innerHTML = html;
         } else {
+            success = false;
             document.getElementById("results").innerHTML = "<div class='error'><h2>An error occurred</h2>See console for details</div>";
-            console.log(xhttp.responseText);
+            console.warn(xhttp.responseText);
+        }
+        if(!success) {
+            postcode = undefined;
         }
     };
     xhttp.send();
